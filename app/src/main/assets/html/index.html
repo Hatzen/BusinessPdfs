@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8">
+<style>
+  li, td {
+	padding: 2mm;
+  }
+  body{
+	height:297mm;width:210mm;
+	padding: 20mm;
+  }
+  h1 {color: black;}
+  p {color: balck;}
+  #contactInformations {
+	float: right;
+  }
+  #contactInformations ul {
+	list-style-type: none;
+	font-weight: bold;
+  }
+  #logo {
+	height: 100px;
+  }
+  .clear {
+	float: clear;
+  }
+  table {
+	width: 100%;
+  }
+  td {
+	
+	border: 1px solid #C0C0C0;
+  }
+  tr.even {
+	background:#0094FF;
+  }
+  tr.odd {
+	background:#B2DFFF;
+  }
+</style>
+</head>
+<body>
+<img id="logo" src="logo.png">
+<div id="contactInformations">
+  <ul>
+	<li>{NAME}</li>
+	<li>{ADDRESS}</li>
+	<li>{EMAIL}</li>
+  </ul>
+</div>
+<div class="clear"></div>
+<div id="content">
+<h1>{HEADLINE}</h1><br>
+<p>
+{TEXT}
+</p>
+<ul>
+  <li>myItem 1</li>
+  <li>myItem 2</li>
+  <li style="list-style-type:none">
+    <ul>
+      <li>myItem 2a</li>
+    </ul>
+  </li>
+  <li>myItem 3</li>
+  <li>myItem 4</li>
+</ul>
+<p>
+{TEXT}
+</p>
+<table>
+	<tr>
+		<th> ID </th>
+		<th> Name </th>
+	</tr>
+	<tr class="odd">
+		<td>1</td>
+		<td>First Element</td>
+	</tr>
+	<tr class="even">
+		<td>2</td>
+		<td>Second Element</td>
+	</tr>
+</table>
+<p style="font-weight: bold; margin-top: 30mm;">Sincerly,</p>
+<p>Max</p>
+
+</div>
+</body>
+</html>
