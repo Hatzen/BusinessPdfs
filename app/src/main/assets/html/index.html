@@ -2,24 +2,31 @@
 <head>
 <meta charset="UTF-8">
 <style>
+  * {
+  	font-family: "arial";
+  }
   li, td {
 	padding: 2mm;
   }
   body{
-	height:297mm;width:210mm;
+	height:297mm;
+	width:210mm;
 	padding: 20mm;
   }
   h1 {color: black;}
   p {color: balck;}
-  #contactInformations {
-	float: right;
-  }
-  #contactInformations ul {
-	list-style-type: none;
-	font-weight: bold;
+  .header {
+  	width: 100%;
+  	border: 1mm solid black;
+	text-align: center;
+	min-height: 2cm;
+	padding: 2mm;
+	margin-bottom: 5mm;
   }
   #logo {
 	height: 100px;
+	float: right;
+	position: relative;
   }
   .clear {
 	float: clear;
@@ -37,54 +44,39 @@
   tr.odd {
 	background:#B2DFFF;
   }
+  .footer {
+  	border-top: 1px solid #000;
+  	padding: 2mm;
+  	position: relative;
+  	left: 0;
+  	right: 0;
+  	bottom: 0;
+  }
+
 </style>
 </head>
 <body>
-<img id="logo" src="file:///android_asset/html/logo.png">
-<div id="contactInformations">
-  <ul>
-	<li>{NAME}</li>
-	<li>{ADDRESS}</li>
-	<li>{EMAIL}</li>
-  </ul>
-</div>
-<div class="clear"></div>
-<div id="content">
-<h1>{HEADLINE}</h1><br>
-<p>
-{TEXT}
-</p>
-<ul>
-  <li>myItem 1</li>
-  <li>myItem 2</li>
-  <li style="list-style-type:none">
-    <ul>
-      <li>myItem 2a</li>
-    </ul>
-  </li>
-  <li>myItem 3</li>
-  <li>myItem 4</li>
-</ul>
-<p>
-{TEXT}
-</p>
-<table>
-	<tr>
-		<th> ID </th>
-		<th> Name </th>
-	</tr>
-	<tr class="odd">
-		<td>1</td>
-		<td>First Element</td>
-	</tr>
-	<tr class="even">
-		<td>2</td>
-		<td>Second Element</td>
-	</tr>
-</table>
-<p style="font-weight: bold; margin-top: 30mm;">Sincerly,</p>
-<p>Max</p>
+	<div class="header">
+		<img id="logo" src="file:///android_asset/html/logo.png">
+		<p>Text in the middle</p>
+	</div>
+	<div class="header">
+		<p>Paragraph with from<br>details</p>
+	</div>
+	<div class="clear"></div>
+	<div id="content">
 
-</div>
+		{$SECTION}
+
+	</div>
+	<div class="footer">
+		My Footer
+	</div>
 </body>
+<script>
+window.onload = function () {
+	// Proper footer caluclation can be done here. Get height of body and add footers accorindly.
+	document.body.style.backgroundColor = "red";
+}
+</script>
 </html>

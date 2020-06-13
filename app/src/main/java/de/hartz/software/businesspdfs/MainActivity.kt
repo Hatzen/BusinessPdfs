@@ -47,11 +47,14 @@ class MainActivity : AppCompatActivity() {
         replacments["{TEXT}"] = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
 
         var htmlContent = assets.open("html/index.html").bufferedReader().use { it.readText() }
-        for (replacement in replacments) {
-            htmlContent = htmlContent.replace(replacement.key, replacement.value)
-        }
 
-        // TODO: Split html in different files and generate some strings representing table rows and so.
+        val sections = mutableListOf("A", "B", "C")
+        val questions = mutableListOf("1", "2", "3")
+        val answers = mutableListOf("I", "II", "III", "IV", "V")
+        val replacementSection = replaceSection(sections, questions, answers)
+        val replacementKeySection = "{\$SECTION}"
+        htmlContent = htmlContent.replace(replacementKeySection, replacementSection)
+
 
         val target = File(Environment.getExternalStorageDirectory().toString(), "file.pdf")
         // val target = File.createTempFile("BusinessPdfPrefix-", ".pdf")
@@ -73,6 +76,49 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    private fun replaceSection(sections: List<String>, questions: List<String>, answers: List<String>): String {
+        val replaceableKey = "{SECTION}"
+        val replaceableKeyQuestions = "{\$QUESTION}"
+        var result = ""
+        for (section in sections) {
+            val inflate = getHtmlPartFromAssets("section")
+            result += inflate
+            result = result.replace(replaceableKey, section)
+            result = result.replace(replaceableKeyQuestions, replaceQuestion(questions, answers))
+        }
+        return result
+    }
+
+    private fun replaceQuestion(questions: List<String>, answers: List<String>): String {
+        val replaceableKey = "{QUESTION}"
+        val replaceableKeyNumberOfQuestions = "{#ANSWER}"
+        val replaceableKeyAnswers = "{\$ANSWER}"
+        var result = ""
+        for (question in questions) {
+            val inflate = getHtmlPartFromAssets("question")
+            result += inflate
+            result = result.replace(replaceableKey, question)
+            result = result.replace(replaceableKeyNumberOfQuestions, answers.size.toString())
+            result = result.replace(replaceableKeyAnswers, replaceAnswer(answers))
+        }
+        return result
+    }
+
+    private fun replaceAnswer(answers: List<String>): String {
+        val replaceableKey = "{ANSWER}"
+        var result = ""
+        for (answer in answers) {
+            val inflate = getHtmlPartFromAssets("answer")
+            result += inflate
+            result = result.replace(replaceableKey, answer)
+        }
+        return result
+    }
+
+    private fun getHtmlPartFromAssets(filename: String): String {
+        return assets.open("html/parts/" + filename + ".html").bufferedReader().use { it.readText() }
     }
 
     private fun openPdf(file: File) {
