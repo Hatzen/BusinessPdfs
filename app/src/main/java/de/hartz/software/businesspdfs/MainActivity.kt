@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
         for (section in sections) {
             val inflate = getHtmlPartFromAssets("section")
             result += inflate
-            result = result.replace(replaceableKey, section)
+            result = result.replace(replaceableKey, "Section " + section)
             result = result.replace(replaceableKeyQuestions, replaceQuestion(questions, answers))
         }
         return result
@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
         for (question in questions) {
             val inflate = getHtmlPartFromAssets("question")
             result += inflate
-            result = result.replace(replaceableKey, question)
+            result = result.replace(replaceableKey, "Question " + question)
             result = result.replace(replaceableKeyNumberOfQuestions, answers.size.toString())
             result = result.replace(replaceableKeyAnswers, replaceAnswer(answers))
         }
@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
         for (answer in answers) {
             val inflate = getHtmlPartFromAssets("answer")
             result += inflate
-            result = result.replace(replaceableKey, answer)
+            result = result.replace(replaceableKey, "Answer " + answer)
         }
         return result
     }

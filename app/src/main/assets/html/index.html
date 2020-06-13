@@ -18,31 +18,23 @@
   .header {
   	width: 100%;
   	border: 1mm solid black;
-	text-align: center;
 	min-height: 2cm;
 	padding: 2mm;
 	margin-bottom: 5mm;
   }
+  .header p {
+	text-align: center;
+  }
   #logo {
 	height: 100px;
 	float: right;
-	position: relative;
   }
   .clear {
-	float: clear;
+	clear: both;
   }
   table {
 	width: 100%;
-  }
-  td {
-	
-	border: 1px solid #C0C0C0;
-  }
-  tr.even {
-	background:#0094FF;
-  }
-  tr.odd {
-	background:#B2DFFF;
+	border: none;
   }
   .footer {
   	border-top: 1px solid #000;
@@ -59,6 +51,7 @@
 	<div class="header">
 		<img id="logo" src="file:///android_asset/html/logo.png">
 		<p>Text in the middle</p>
+		<div class="clear"></div>
 	</div>
 	<div class="header">
 		<p>Paragraph with from<br>details</p>
