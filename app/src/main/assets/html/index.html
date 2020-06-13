@@ -8,13 +8,8 @@
   li, td {
 	padding: 2mm;
   }
-  body{
-	height:297mm;
-	width:210mm;
-	padding: 20mm;
-  }
   h1 {color: black;}
-  p {color: balck;}
+  p {color: black;}
   .header {
   	width: 100%;
   	border: 1mm solid black;
@@ -28,6 +23,7 @@
   #logo {
 	height: 100px;
 	float: right;
+	position: relative;
   }
   .clear {
 	clear: both;
@@ -42,15 +38,15 @@
     position: fixed;
   	left: 0;
   	right: 0;
-  	bottom: -5mm;
+  	bottom: 0;
   }
 
 </style>
 </head>
 <body>
 	<div class="header">
-		<img id="logo" src="file:///android_asset/html/logo.png">
 		<p>Text in the middle</p>
+		<img id="logo" src="file:///android_asset/html/logo.png">
 		<div class="clear"></div>
 	</div>
 	<div class="header">
@@ -68,8 +64,8 @@
 </body>
 <script>
 window.onload = function () {
-	// Proper footer caluclation can be done here. Get height of body and add footers accorindly.
-	document.body.style.backgroundColor = "red";
+	// Additional calculations and DOM manipulation could be done here via javascript.
+	// document.body.style.backgroundColor = "red";
 }
 </script>
 </html>
