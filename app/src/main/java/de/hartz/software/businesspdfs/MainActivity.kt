@@ -39,13 +39,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun createPdfFromTemplate() {
         // TODO: Request Permission external storatge!!
-        val replacments = mutableMapOf<String, String>()
-        replacments["{NAME}"] = "The Company"
-        replacments["{ADDRESS}"] = "an avenue Washingt 1234"
-        replacments["{EMAIL}"] = "email@company.com"
-        replacments["{HEADLINE}"] = "Dear Customer, "
-        replacments["{TEXT}"] = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-
         var htmlContent = assets.open("html/index.html").bufferedReader().use { it.readText() }
 
         val sections = mutableListOf("A", "B", "C", "D", "E")
@@ -54,7 +47,6 @@ class MainActivity : AppCompatActivity() {
         val replacementSection = replaceSection(sections, questions, answers)
         val replacementKeySection = "{\$SECTION}"
         htmlContent = htmlContent.replace(replacementKeySection, replacementSection)
-
 
         val target = File(Environment.getExternalStorageDirectory().toString(), "file.pdf")
         // val target = File.createTempFile("BusinessPdfPrefix-", ".pdf")
@@ -140,6 +132,5 @@ class MainActivity : AppCompatActivity() {
         } catch (e: ActivityNotFoundException) {
             // Instruct the user to install a PDF reader here, or something
         }
-
     }
 }

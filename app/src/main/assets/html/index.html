@@ -12,8 +12,6 @@
   li, td {
 	padding: 2mm;
   }
-  h1 {color: black;}
-  p {color: black;}
   .header {
   	width: 100%;
   	border: 1mm solid black;
@@ -30,8 +28,11 @@
   	background-position: top right;
   	background-repeat: no-repeat !important;
   }
-  .clear {
-	clear: both;
+  #content {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -4em;
   }
   table {
   	page-break-inside:avoid;
@@ -43,34 +44,49 @@
   }
   tr {
   	page-break-inside:avoid;
-  	 page-break-after:auto;
+  	page-break-after:auto;
   }
+/*https://medium.com/@Idan_Co/the-ultimate-print-html-template-with-header-footer-568f415f6d2a*/
+.footer, .footer-space {
+  height: 100px;
+}
   .footer {
   	border-top: 1px solid #000;
   	padding: 2mm;
+    /* This will lead to a footer on every page, but content overlapping with footer cant be avoided without further workarounds..
+    https://www.codeproject.com/Questions/247645/Print-html-table-into-A4-size */
     position: fixed;
     bottom: 0;
   	left: 0;
   	right: 0;
   }
   @page {
+  	/*Define page borders here
+  	margin: 2cm;
+  	*/
   }
 </style>
 </head>
 <body>
-	<div id="logo" class="header">
-		<p>Text in the middle</p>
-	</div>
-	<div class="header">
-		<p>Paragraph with from<br>details</p>
-	</div>
-	<div class="clear"></div>
-	<div id="content">
-		{$SECTION}
-	</div>
-	<div class="footer">
-		My Footer
-	</div>
+<table>
+	<tbody><tr><td>
+		<div id="logo" class="header">
+			<p>Text in the middle</p>
+		</div>
+		<div class="header">
+			<p>Paragraph with from<br>details</p>
+		</div>
+		<div class="clear"></div>
+		<div id="content">
+			{$SECTION}
+			<div class="push"></div>
+		</div>
+	</td></tr></tbody>
+	<tfoot><tr><td>
+		<div class="footer-space">&nbsp;</div>
+	</td></tr></tfoot>
+</table>
+<div class="footer">My Footer</div>
 </body>
 <script>
 window.onload = function () {
