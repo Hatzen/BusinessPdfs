@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         val sections = mutableListOf("A", "B", "C")
         val questions = mutableListOf("1", "2", "3")
-        val answers = mutableListOf("I", "II", "III", "IV", "V", "VI")
+        val answers = mutableListOf("I", "II")
         val replacementSection = replaceSection(sections, questions, answers)
         val replacementKeySection = "{\$SECTION}"
         htmlContent = htmlContent.replace(replacementKeySection, replacementSection)
