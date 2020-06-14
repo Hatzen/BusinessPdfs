@@ -48,9 +48,9 @@ class MainActivity : AppCompatActivity() {
 
         var htmlContent = assets.open("html/index.html").bufferedReader().use { it.readText() }
 
-        val sections = mutableListOf("A", "B", "C")
+        val sections = mutableListOf("A", "B", "C", "D", "E")
         val questions = mutableListOf("1", "2", "3")
-        val answers = mutableListOf("I", "II")
+        val answers = mutableListOf("I", "II", "III", "IV")
         val replacementSection = replaceSection(sections, questions, answers)
         val replacementKeySection = "{\$SECTION}"
         htmlContent = htmlContent.replace(replacementKeySection, replacementSection)
@@ -82,9 +82,14 @@ class MainActivity : AppCompatActivity() {
         val replaceableKey = "{SECTION}"
         val replaceableKeyQuestions = "{\$QUESTION}"
         var result = ""
+        var isFirstSection = true
         for (section in sections) {
             val inflate = getHtmlPartFromAssets("section")
             result += inflate
+            if (isFirstSection) {
+                result = result.replace("{ADDITIONAL_CLASS}", "firstSection")
+                isFirstSection = false
+            }
             result = result.replace(replaceableKey, "Section " + section)
             result = result.replace(replaceableKeyQuestions, replaceQuestion(questions, answers))
         }
@@ -114,7 +119,7 @@ class MainActivity : AppCompatActivity() {
             result += inflate
             val constant = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
             val constant2 = "<input type='checkbox'> Answer"
-            result = result.replace(replaceableKey, constant2 + answer)
+            result = result.replace(replaceableKey, constant2 + constant + answer)
         }
         return result
     }
