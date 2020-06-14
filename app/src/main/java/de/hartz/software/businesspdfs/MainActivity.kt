@@ -1,44 +1,71 @@
 package de.hartz.software.businesspdfs
 
-import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
-import io.github.lucasfsc.html2pdf.Html2Pdf
-
-import kotlinx.android.synthetic.main.activity_main.*
-import java.io.File
+import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.os.Environment.getExternalStorageDirectory
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
+import android.os.Bundle
 import android.os.Environment
-import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.util.Log
-import java.security.AccessController.getContext
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import io.github.lucasfsc.html2pdf.Html2Pdf
+import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
+
+    private val requestCodeStoragePermission = 1124
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-
-
         fab.setOnClickListener { view ->
-            createPdfFromTemplate()
+            if (isStoragePermissionGranted()) {
+                createPdfFromTemplate()
+            } else {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), requestCodeStoragePermission)
+            }
+        }
+    }
+    fun isStoragePermissionGranted(): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                Log.v(javaClass.simpleName, "Permission is granted")
+                return true
+            } else {
+
+                Log.v(javaClass.simpleName, "Permission is revoked")
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    1
+                )
+                return false
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            Log.v(javaClass.simpleName, "Permission is granted")
+            return true
+        }
+    }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == requestCodeStoragePermission) {
+            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.v(javaClass.simpleName, "Permission: " + permissions[0] + "was " + grantResults[0])
+                //resume tasks needing this permission
+                createPdfFromTemplate()
+            }
         }
     }
 
     private fun createPdfFromTemplate() {
-        // TODO: Request Permission external storatge!!
         var htmlContent = assets.open("html/index.html").bufferedReader().use { it.readText() }
 
         val sections = mutableListOf("A", "B", "C", "D", "E")
@@ -121,7 +148,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openPdf(file: File) {
-        // TODO: File needs to shared via ContentProvider or shared memory!
         val target = Intent(Intent.ACTION_VIEW)
         target.setDataAndType(Uri.fromFile(file), "application/pdf")
         target.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
