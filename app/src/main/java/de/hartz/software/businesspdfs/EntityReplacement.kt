@@ -1,6 +1,11 @@
 package de.hartz.software.businesspdfs
 
 import android.app.Activity
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import java.util.*
+import kotlin.jvm.functions.Function1
+
+
 
 
 interface Replacement<T> {
@@ -20,7 +25,10 @@ interface Replacement<T> {
      * Returns a String representing this class
      */
     fun getPlaceholderName(): String {
-        return "{" + javaClass.simpleName + "}"
+        val default = javaClass.simpleName
+        // https://stackoverflow.com/a/27355188/8524651
+        val firstWordFromClass = default.split("(?<=.)(?=\\p{Lu})")
+        return "{$firstWordFromClass}"
     }
 }
 
