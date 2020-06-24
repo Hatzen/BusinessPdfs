@@ -31,7 +31,6 @@
   #content {
   }
   table {
-  	page-break-inside:avoid;
 	width: 100%;
 	border: none;
   }
@@ -39,8 +38,10 @@
   	page-break-inside:auto !important;
   }
   tr {
-  	page-break-inside:avoid;
   	page-break-after:auto;
+  }
+  table td, table td * {
+    vertical-align: top;
   }
   /*https://medium.com/@Idan_Co/the-ultimate-print-html-template-with-header-footer-568f415f6d2a*/
   .footer, .footer-space {
